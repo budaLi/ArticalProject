@@ -474,7 +474,7 @@ class MovieItem(scrapy.Item):
         movie_url=self['movie_url']
 
         insert_sql="""insert into movie(url,url_object_id,title,tags,score,info,role,image_url,movie_url) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
-                   on duplicate KEY UPDATE info=VALUE(info) score=VALUE(score)"""
+                   on duplicate KEY UPDATE info=VALUES(info) score=VALUES(score)"""
         params=(url,url_object_id,title,tags,score,info,role,image_url,movie_url)
 
         return insert_sql,params
