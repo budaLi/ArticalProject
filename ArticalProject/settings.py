@@ -67,8 +67,9 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    'ArticalProject.pipelines.MysqlTwistedPipeline': 2,      #数字大小决定执行顺序，越小越先执行
    #  'ArticalProject.pipelines.ArticalImagePipeline':1,  #重写管道
-     'ArticalProject.pipelines.MovieImagePipeline':1,  #重写管道
+    'ArticalProject.pipelines.MovieImagePipeline':1,  #重写管道
     #  'ArticalProject.pipelines.TianyanchaPipeline':1,  #重写管道
+    #'ArticalProject.pipelines.MeiziImagePipeline':1,  #重写管道
 
 }
 
@@ -78,7 +79,8 @@ ITEM_PIPELINES = {
 IMAGES_URLS_FIELD='image_url'  #指向items下的一个字段 指明所要下载的图片的url
 # os.path.dirname(__file__)     #获取当前文件的文件名
 project_dir=os.path.abspath(os.path.dirname(__file__))  #根据文件名获取绝对路径
-IMAGES_STORE=os.path.join(project_dir,'images') #配置图片的存放路径  在此配置相对路径
+# IMAGES_STORE=os.path.join(project_dir,'images') #配置图片的存放路径  在此配置相对路径
+IMAGES_STORE='E:\data\images'
 # IMAGES_MIN_HEIGHT=100      #设置图片大小
 # IMAGE_MIN_WIDTH=100
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -102,7 +104,7 @@ IMAGES_STORE=os.path.join(project_dir,'images') #配置图片的存放路径  �
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 MYSQL_HOST='127.0.0.1'  #在setting中配置数据库文件
-MYSQL_DBNAME='artile_spider'
+MYSQL_DBNAME='movie'
 MYSQL_USER='root'
 MYSQL_PASSWORD='123'
 

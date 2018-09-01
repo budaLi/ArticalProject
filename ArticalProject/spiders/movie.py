@@ -1,53 +1,83 @@
-# -*- coding: utf-8 -*-
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
-from ArticalProject.items import MovieItem
-from scrapy.loader import ItemLoader
-from ArticalProject.utls.common import get_md5
-import urllib.request
+from ArticalProject.items import VideoItem
 
-class MovieSpider(CrawlSpider):
 
+class TencentSpider(scrapy.Spider):
     name = 'movie'
     allowed_domains = ['v.qq.com']
-    start_urls = ['https://v.qq.com/movie/']
-    movie_detail_url='http://yun.baiyug.cn/vip/index.php?url='
+    base_url = 'https://v.qq.com/x/list/movie?offset='
     custom_settings = {
-        "COOKIES_ENABLED": True,
-        "DOWNLOAD_DELAY": 0.03,
+        "COOKIES_ENABLED": False,
+        "DOWNLOAD_DELAY": 0.00,
         'DEFAULT_REQUEST_HEADERS': {
-        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-       'Accept-Encoding':'gzip, deflate, sdch',
-        'Accept-Language':'zh-CN,zh;q=0.8',
-        'Connection':'keep-alive',
-        'Cookie':'Hm_lvt_ffcba8bba444f065b18b388402d00e95=1535115372,1535115372,1535115407,1535115407; Hm_lpvt_ffcba8bba444f065b18b388402d00e95=1535115407',
-        'Host':'v.qq.com',
-        'Referer':'https://v.qq.com/movie/',
-        'Upgrade-Insecure-Requests':1,
-        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36'
-    } }
-    rules = (
-        Rule(LinkExtractor(allow=r'https://v.qq.com/x/cover/.*?.html'), callback='parse_item', follow=True),
-        Rule(LinkExtractor(allow=r'https://v.qq.com/movie/'),follow=True),
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'en',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+        }
+    }
+    offset = 0
+    start_urls = [base_url + str(offset)]
+    total_page = 0
 
-    )
-    def parse_item(self, response):     #每一页有多个电影 需要 对每个电影解析
+    def parse(self, response):
+        if self.offset == 0:
+            self.total_page = int(response.xpath("/html/body/div[3]/div/div/div[2]/span/a[9]/text()").extract()[0])
+        video_list = response.xpath("//li[@class='list_item']")
+        for node in video_list:
+            item = VideoItem()
+            name = node.xpath(".//strong[@class='figure_title']/a/text()").extract()[0]
+            score_text = node.xpath(".//div[@class='figure_score']//em/text()").extract()
+            score = ''.join(score_text)
+            if len(node.xpath(".//span[@class ='figure_info']/text()")):
+                short_desc = node.xpath(".//span[@class ='figure_info']/text()").extract()[0]
+            else:
+                short_desc = ''
+            stars_text = node.xpath(".//div[@class='figure_desc']/a/text()").extract()
+            stars = ','.join(stars_text)
+            hot = node.xpath(".//span[@class='num']/text()").extract()[0]
+            play_url = node.xpath(".//a/@href").extract()[0]
+            img = node.xpath(".//img/@r-lazyload").extract()[0]
+            item['movie_name'] = name
+            item['short_desc'] = short_desc
+            item['score'] = score
+            item['stars'] = stars
+            item['hot'] = hot
+            item['play_url'] = play_url
+            item['image_url'] = ['http:'+img]
+            request = scrapy.Request(url=play_url, callback=self.get_detail)
+            request.meta['item'] = item
+            yield request
+            # break
+        if self.offset < self.total_page - 1:
+            self.offset += 1
+            url = self.base_url + str(self.offset * 30)
+            yield scrapy.Request(url, callback=self.parse)
 
-        itemloader=ItemLoader(item=MovieItem(),response=response)
-        itemloader.add_value('url',response.url)
-        itemloader.add_value('url_object_id',get_md5(response.url))
-        itemloader.add_css('main_title','.video_title a::text')
-        itemloader.add_css('title','.video_title::text')
-        itemloader.add_css('tags','.video_info a::text')
-        itemloader.add_css('score1','.video_score .units::text')  #评分两部分构成
-        itemloader.add_css('score2','.video_score .decimal::text')
-        itemloader.add_css('info','.summary::text')
-        itemloader.add_css('role','.director a::text')
-        itemloader.add_css('image_url','.figure_pic::attr(style)')
-        itemloader.add_value('movie_url',self.movie_detail_url+response.url)
+    def get_detail(self, response):
+        item = response.meta['item']
+        alias_text = response.xpath("//h1/span/text()")
+        if len(alias_text) == 1:
+            alias = alias_text.extract()[0]
+        else:
+            alias = ''
 
+        description = response.xpath("//p[@class='summary']/text()").extract()[0]
 
-        item=itemloader.load_item()
+        tags_text = response.xpath("//div[@class='video_tags _video_tags']/a/text()").extract()
+        if len(tags_text):
+            tags = ','.join(tags_text)
+        else:
+            tags = ''
 
-        return item
+        play_time = response.xpath("//div[@class='figure_count']/span[@class='num']/text()").extract_first()
+        director_list = response.xpath("//div[@class='director']/a/node()").extract()
+        stars_list = [x for x in item['stars'].split(',')]
+        director_list = [item for item in director_list if item not in stars_list]
+        director = ','.join(director_list)
+
+        item['director'] = director
+        item['alias'] = alias
+        item['tags'] = tags
+        item['description'] = description
+        item['play_time'] = play_time
+        yield item

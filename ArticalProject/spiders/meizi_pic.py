@@ -13,7 +13,9 @@ class MeiziSpider(scrapy.Spider):
     name = 'meizi'
     allowed_domains = ['www.meizitu.com']
     start_urls = ['http://www.meizitu.com/a/more_1.html']
-
+    custom_settings = {
+            "DOWNLOAD_DELAY": 0.03
+        }
 
     def parse(self,response):
         pic_urls=response.css('.wp-item .tit a::attr(href)').extract()
@@ -22,7 +24,6 @@ class MeiziSpider(scrapy.Spider):
         nex_url='http://www.meizitu.com/a/more_{0}.html'
         #提取下一页并进行下载
         for i in range(2,16):  #共有
-            print(123)
             yield Request(url=nex_url.format(i),callback=self.parse)
     def parse_detail(self,response):
         pic_urls=response.css('#picture img::attr(src)').extract()

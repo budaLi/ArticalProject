@@ -235,26 +235,57 @@ class LagouJobItem(scrapy.Item):
             salary_min=salary_max=0
         try:
             job_city=remove_xiexian(''.join(self['job_city'])) if self['job_city'] else None
-        except:
+        except Exception as e:
+            print(e)
             job_city=None
-        work_years_min=split_years(''.join(self['work_years_min']).split('-')[0]) if ''.join(self['work_years_min']).split('-')[0] else None
         try:
-            work_years_max=remove_xiexian(''.join(self['work_years_min']).split('-')[1]) if ''.join(self['work_years_min']).split('-')[1] else None
+            work_years_min=split_years(''.join(self['work_years_min']).split('-')[0]) if ''.join(self['work_years_min']).split('-')[0] else '经验不限'
+        except Exception as e:
+            print(e)
+            work_years_min='经验不限'
+        try:
+            work_years_max=remove_xiexian(''.join(self['work_years_min']).split('-')[1]) if ''.join(self['work_years_min']).split('-')[1] else '经验不限'
+        except Exception as e:
+            print(e.args)
+            work_years_max='经验不限'
+        try:
+            tags=remove_xiexian('-'.join(self['tags']))
         except:
-            work_years_max=None
-        tags=remove_xiexian('-'.join(self['tags']))
+            tags=''
         publish_time=''.join(self['publish_time']).split(' ')[0] if ''.join(self['publish_time']).split(' ')[0] else self['publish_time']
-        degree_need=remove_xiexian(''.join(self['degree_need']))
+        try:
+            degree_need=remove_xiexian(''.join(self['degree_need']))
+        except:
+            degree_need='学历不限'
         try:
             job_desc=remove_xiexian(''.join(self['job_desc']))
         except:
             job_desc=None
         job_addvantage=''.join(self['job_addvantage'])
-        company_name=remove_xiexian(''.join(self['company_name']))
-        company_area='-'.join(self['company_area'][:-1])
-        company_url=''.join(self['company_url']) if self['company_url'] else None
-        company_scale=remove_xiexian(''.join(self['company_scale'])) if self['company_scale'] else None
-        company_develop_state=remove_xiexian(''.join(self['company_develop_state']))
+        try:
+            work_type=self['work_type']
+        except:
+            work_type=''
+        try:
+            company_name=remove_xiexian(''.join(self['company_name']))
+        except:
+            company_name=''
+        try:
+            company_area='-'.join(self['company_area'][:-1])
+        except:
+            company_area=''
+        try:
+            company_url=''.join(self['company_url']) if self['company_url'] else None
+        except:
+            company_url=''
+        try:
+            company_scale=remove_xiexian(''.join(self['company_scale'])) if self['company_scale'] else None
+        except:
+            company_scale=''
+        try:
+            company_develop_state=remove_xiexian(''.join(self['company_develop_state']))
+        except:
+            company_develop_state=''
         crawl_time=datetime.datetime.now().strftime(SQL_DATE_FORMAT)
         insert_sql="""
                 insert into lagou_job(title,url,url_object_id,salary_min,salary_max,job_city,work_years_min,work_years_max,degree_need,work_type,tags,publish_time,job_addvantage,job_desc,company_name,
@@ -263,7 +294,7 @@ class LagouJobItem(scrapy.Item):
                 """
         params=(
             self['title'],self['url'],self['url_object_id'],salary_min,salary_max,job_city,work_years_min,work_years_max,degree_need,
-            self['work_type'],tags,publish_time,job_addvantage,job_desc,company_name,company_area,
+            work_type,tags,publish_time,job_addvantage,job_desc,company_name,company_area,
             company_develop_state,company_url,company_scale,crawl_time
         )
 
@@ -303,43 +334,51 @@ VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,)"""
         return insert_sql,params
 
 class ZhilianzhaopinItem(scrapy.Item):
-    all=scrapy.Field()
-    url=scrapy.Field()
-    url_object_id=scrapy.Field()
-    title=scrapy.Field()
-    work_min_years=scrapy.Field()
-    work_max_years=scrapy.Field()
-    job_city=scrapy.Field()
-    degree_need=scrapy.Field()
-    job_info=scrapy.Field()
-    job_addvantage=scrapy.Field()
-    company_name=scrapy.Field()
+    # url = scrapy.Field()
+    # pname = scrapy.Field()
+    # smoney = scrapy.Field()
+    # emoney = scrapy.Field()
+    # location = scrapy.Field()
+    # syear = scrapy.Field()
+    # eyear = scrapy.Field()
+    # degree = scrapy.Field()
+    # ptype = scrapy.Field()
+    # tags = scrapy.Field()
+    # date_pub = scrapy.Field()
+    # advantage = scrapy.Field()
+    # jobdesc = scrapy.Field()
+    # jobaddr = scrapy.Field()
+    # company = scrapy.Field()
+    # crawl_time = scrapy.Field()
 
-    def insert_sql(self):
-        salary_min,salary_max,work_min_years,work_max_years=0,0,0,0
-        url=self['url']
-        url_object_id=self['url_object_id']
-        title=self['title']
-        if self['salary_min']:
-            salary=''.join(self['salary_min'])
-            salary_min=salary.split('-')[0] if salary.split('-')[0] else 0
-            salary_max=salary.split('-')[1] if salary.split('-')[1] else 0
-        if self['work_min_years']:
-            years=''.join(self['work_min_years'])
-            work_min_years=years.split('-')[0] if years.split('-')[0] else '学历不限'
-            work_max_years=years.split('-')[1] if years.split('-')[1] else '学历不限'
-        job_city=''.join(self['job_city'])
-        degree_need=''.join(self['degree_need'])
-        job_info=''.join(self['info'])
-        job_addvantage=''.join(self['job_addvantage'])
-        company_name=''.join(self['company_name'])
-        tags=('-'.join(self['tags']))
-        work_address=''.join(self['work_address'])
-        company_scale=''.join(self['company_scale'])
 
-        sql="""insert into zhilianzhaopin(url,url_object_id,title,salary_min,salary_max,work_min_years,work_max_years,job_city,degree_need,job_info,job_addvantage,company_name,tags,work_address,company_scale)' \
-            'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE salary_min=VALUES(salary_min) salary_max=VALUES(salary_max) work_min_years=VALUES(work_min_years) work_max_years=VALUES(work_max_years) job_info=VALUES(job_info) degree_need=VALUES(degree_need) tags=VALUES(tags)"""
-        params=(url,url_object_id,title,salary_min,salary_max,work_min_years,work_max_years,job_city,degree_need,job_info,job_addvantage,company_name,tags,work_address,company_scale)
+    def get_insert_sql(self):
+        '''
+        原来使用itemloader获取数据不太理想
+        '''
+        # salary_min,salary_max,work_min_years,work_max_years=0,0,0,0
+        # url=self['url']
+        # url_object_id=self['url_object_id']
+        # title=self['all'][2]
+        # if self['all'][3]:
+        #     salary=''.join(self['all'][3])
+        #     salary_min=salary.split('-')[0] if salary.split('-')[0] else 0
+        #     salary_max=salary.split('-')[1] if salary.split('-')[1] else 0
+        # years=''.join(self['all'][5])
+        # work_min_years=years.split('-')[0] if years.split('-')[0] else '学历不限'
+        # work_max_years=years.split('-')[1] if years.split('-')[1] else '学历不限'
+        # # job_city=''.join(self['job_city'])
+        # degree_need=''.join(self['all'][6])
+        # job_addvantage=''.join(self['job_addvantage'])
+        # job_info=''.join(self['job_addvantage'])
+        # # company_name=''.join(self['company_name'])
+        # # tags=('-'.join(self['tags']))
+        # work_address=''.join(self['all'][10])
+        # company_scale=''.join(self['all'][8])
+        pass
+        sql="""insert into zhilianzhaopin(url,url_object_id,pname,smoney,emoney,location,syear,eyear,degree,ptype,tags,date_pub,advantage,jobdesc,jobaddr,company,crawl_time)' \
+            'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+        params=(self['url'],self['pname'],self['smoney'],self['emoney'],self['location'],self['syear'],self['eyear'],self['degree'],self['ptype'],self['tags'],self['date_pub'],self['advantage'],self['jobdesc'],self['jobaddr'],self['company'],self['crawl_time'])
 
         return sql,params
 
@@ -476,5 +515,54 @@ class MovieItem(scrapy.Item):
         insert_sql="""insert into movie(url,url_object_id,title,tags,score,info,role,image_url,movie_url) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
                    on duplicate KEY UPDATE info=VALUES(info) score=VALUES(score)"""
         params=(url,url_object_id,title,tags,score,info,role,image_url,movie_url)
+
+        return insert_sql,params
+
+
+class MeiziItem(scrapy.Item):
+    image_url=scrapy.Field()
+    front_image_path=scrapy.Field()
+
+
+class XiaoshuoItem(scrapy.Item):
+    title=scrapy.Field()
+    content=scrapy.Field()
+
+class VideoItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    # 名字
+    movie_name = scrapy.Field()
+    # 一句话描述
+    short_desc = scrapy.Field()
+    # 评分
+    score = scrapy.Field()
+    # 主演
+    stars = scrapy.Field()
+    # 播放量
+    hot = scrapy.Field()
+    # 播放地址
+    play_url = scrapy.Field()
+    # 图片
+    image_url = scrapy.Field()
+    # 别名
+    image_path=scrapy.Field()
+    alias = scrapy.Field()
+    # 导演
+    director = scrapy.Field()
+    # tag
+    tags = scrapy.Field()
+    # 简介
+    description = scrapy.Field()
+    # 播放时间
+    play_time = scrapy.Field()
+    crawl_time=scrapy.Field()
+    def get_insert_sql(self):
+        crawl_time=datetime.datetime.now().strftime(SQL_DATETIME_FORMAT)
+        description=remove_xiexian(self['description'])
+        play_url='http://yun.baiyug.cn/vip/index.php?url='+self['play_url']
+        insert_sql="""insert into tc_movie(movie_name,short_desc,score,stars,hot,play_url,image_url,image_path,alias,director,tags,description,play_time,crawl_time) VALUES
+                      (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+        params=[self['movie_name'],self['short_desc'],self['score'],self['stars'],self['hot'],play_url,self['image_url'],self['image_path'],self['alias'],self['director'],self['tags'],description,self['play_time'],crawl_time]
 
         return insert_sql,params

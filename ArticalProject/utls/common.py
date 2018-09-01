@@ -91,7 +91,7 @@ def remove_xiexian(text):       #去除斜线换行符
     if text=="":
         return ''
     text=text.replace('/n','').replace("/","").replace(' ','').replace('</p>','').replace('<p>','').replace('<li class="labels">','').replace(
-        '</li>','').replace('<pclass="description">','').replace('<br>','').replace('<spanclass="">','').replace('<span>','').replace('\n','').replace('<pclass="">','').replace('<strong>','').replace('<brclass="">','').replace('\t','')
+        '</li>','').replace('<pclass="description">','').replace('<br>','').replace('<spanclass="">','').replace('<span>','').replace('\n','').replace('<pclass="">','').replace('<strong>','').replace('<brclass="">','').replace('\t','').replace(r'\r<br>','')
     return text
 if __name__=='__main__':
     import requests

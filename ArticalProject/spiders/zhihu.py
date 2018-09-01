@@ -113,7 +113,7 @@ class ZhihuSpider(scrapy.Spider):
 
     custom_settings = {
         "COOKIES_ENABLED": True,
-        "DOWNLOAD_DELAY": 1.5,
+        "DOWNLOAD_DELAY": 0.1,
     }
 
     def parse(self, response):

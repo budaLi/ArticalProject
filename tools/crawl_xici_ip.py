@@ -91,17 +91,17 @@ class GetIp(object):
 if __name__=='__main__':
     S=GetIp()       #取ip
     print(S.get_random())
-    # while 1:
-    #     ip=S.get_random()
-    #     print('当前使用ip:',ip)
-    #     try:
-    #         crwal_xici_ip(ip)   #爬i
-    #     except:
-    #         pass
-    #     S.delete_ip(ip)     #爬玩不用了
+    while 1:
+        ip=S.get_random()
+        print('当前使用ip:',ip)
+        try:
+            crwal_xici_ip(ip)   #爬i
+        except:
+            pass
+        S.delete_ip(ip)     #爬玩不用了
 
 
-    # S=GetIp()
-    # while 1:
-    #     res=S.get_random()
-    #     print('此ip可用',res)
+    S=GetIp()
+    while 1:
+        res=S.get_random()
+        print('此ip可用',res)

@@ -12,7 +12,7 @@ class LagouSpider(CrawlSpider):
     start_urls = ['https://www.lagou.com/zhaopin/']
     custom_settings = {
         "COOKIES_ENABLED": False,
-        "DOWNLOAD_DELAY": 0.03,
+        "DOWNLOAD_DELAY": 0.00,
         'DEFAULT_REQUEST_HEADERS': {
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding': 'gzip, deflate, br',
@@ -38,11 +38,11 @@ class LagouSpider(CrawlSpider):
         itemloder.add_value('url',response.url)
         itemloder.add_value('url_object_id',get_md5(response.url))
         itemloder.add_css('salary_min','.salary::text')     #工资范围  1k-2k
-        itemloder.add_xpath('job_city','/html/body/div[3]/div/div[1]/dd/p[1]/span[2]/text()')       #有斜线  /上海/
-        itemloder.add_xpath('work_years_min','/html/body/div[3]/div/div[1]/dd/p[1]/span[3]/text()')
-        itemloder.add_xpath('degree_need','/html/body/div[3]/div/div[1]/dd/p[1]/span[4]/text()')
-        itemloder.add_xpath('work_type','/html/body/div[3]/div/div[1]/dd/p[1]/span[5]/text()')
-        itemloder.add_xpath('tags','/html/body/div[3]/div/div[1]/dd/ul/li/text()')      #['移动互联网', '房产服务', '金融', '智能硬件', 'ERP', '后台']
+        itemloder.add_xpath('job_city','/html/body/div[2]/div/div[1]/dd/p[1]/span[2]/text()')       #有斜线  /上海/
+        itemloder.add_xpath('work_years_min','/html/body/div[2]/div/div[1]/dd/p[1]/span[3]/text()')
+        itemloder.add_xpath('degree_need','/html/body/div[2]/div/div[1]/dd/p[1]/span[4]/text()')
+        itemloder.add_xpath('work_type','/html/body/div[2]/div/div[1]/dd/p[1]/span[5]/text()')
+        itemloder.add_xpath('tags','/html/body/div[2]/div/div[1]/dd/ul/li/text()')      #['移动互联网', '房产服务', '金融', '智能硬件', 'ERP', '后台']
         itemloder.add_css('publish_time','.publish_time::text')     #14:46  发布于拉勾网
         itemloder.add_xpath('job_addvantage','//*[@id="job_detail"]/dd[1]/p/text()')
         itemloder.add_css('job_desc','.job_bt div p')      #列表 需要','.join()

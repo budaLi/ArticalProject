@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from scrapy.spider import CrawlSpider,Rule
+from scrapy.linkextractors import LinkExtractor
 from scrapy.http import Request
 from scrapy.loader import ItemLoader
 from ArticalProject.items import ZhilianzhaopinItem
@@ -8,58 +10,47 @@ import requests
 import re
 from urllib import parse
 
-
-class ZhilianSpider(scrapy.Spider):
+count=0
+class ZhilianSpider(CrawlSpider):
     name = 'zhilian'
-    allowed_domains = ['https://fe-api.zhaopin.com','sou.zhaopin.com/?jl=489']
-    start_urls=['https://sou.zhaopin.com/?jl=489']
+    allowed_domains = ['jobs.zhaopin.com']
+    start_urls=['https://jobs.zhaopin.com/131945248250288.htm']
     josn_url = 'https://fe-api.zhaopin.com/c/i/sou?start=0&pageSize=60&cityId=489&workExperience=-1&education=-1&companyType=-1&employmentType=-1&jobWelfareTag=-1&kt=3&lastUrlQuery=%7B%22p%22:1,%22jl%22:%22489%22%7D'
-    headers = {
-        # "HOST": "sou.zhaopin.com/?jl=489",
-        # "Referer": "https://sou.zhaopin.com/?jl=489",
-        'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"
-    }
-
     custom_settings = {
         "COOKIES_ENABLED": True,
-        "DOWNLOAD_DELAY": 1,
-    }
+        "DOWNLOAD_DELAY": 0.03,
+        'DEFAULT_REQUEST_HEADERS': {
+        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+       'Accept-Encoding':'gzip, deflate, sdch',
+        'Accept-Language':'zh-CN,zh;q=0.8',
+        'Connection':'keep-alive',
+        'Cookie':'Hm_lvt_ffcba8bba444f065b18b388402d00e95=1535115372,1535115372,1535115407,1535115407; Hm_lpvt_ffcba8bba444f065b18b388402d00e95=1535115407',
+        'Host':'jobs.zhaopin.com',
+        'Referer':'https://jobs.zhaopin.com/',
+        'Upgrade-Insecure-Requests':1,
+        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36'
+    } }
+    rules = (
+        Rule(LinkExtractor(allow=r'https://jobs.zhaopin.com/\d{15}.*?.htm'), callback='parse_detail', follow=True),
+        Rule(LinkExtractor(allow=r'https://sou.zhaopin.com/.*?'),follow=True),
 
-    def parse(self, response):
-        page_size=60
-        next_page=1
-        try:
-            #提取是否有下一页 去api接口构造访问
-                next_page+=1
-                page_size+=60
-                url=self.josn_url.format(60,2)
-                yield Request(url,headers=self.headers,callback=self.parse_item)
-        except:
-            print('无数据')
-    def parse_item(self,response):  #获取json
-        print('匹配正确')
-        math=re.compile('(https://jobs.zhaopin.com/.*?.htm)')
-        res=math.findall(response.text)     #所有符合条件的
-        for one in res:
-            detail=requests.get(one)
-            yield Request(one,callback=self.parse_detail,headers=self.headers)
+    )
     def parse_detail(self,response):
-        print('1')
+        global count
+        count+=1
+        print(count)
         # te='['首页', '保定人才网', '保定销售代表招聘', '6000-10000元/月\xa0', '全职', '不限', '本科', '10人 ', '双休', '试用期缴纳五险一金', '1000-9999人', '民营', '\n石家庄市桥东区中山路39号勒泰中心（B座）写字楼37/38/39层', '\n']'
         # print(response.text)
-        try:
-            itemloder=ItemLoader(item=ZhilianzhaopinItem(),response=response)
-            itemloder.add_value('url',response.url)
-            itemloder.add_value('url_object_id',get_md5(response.url))
-            # itemloder.add_css('title','.l.info-h3::text')
-            # itemloder.add_css('all','strong::text') #salary work_years degree_need  job_addvantage scale company_type address
-            # itemloder.add_css('tags','.icon-promulgator-person a::text')
-            # itemloder.add_css('job_info','.pos-ul span::text')
-            # itemloder.add_css('company_name','.companny a::text')
-
-
-            item=itemloder.load_item()
-            return item
-        except Exception as e:
-            print(e)
-            pass
+        # itemloder=ItemLoader(item=ZhilianzhaopinItem(),response=response)
+        # itemloder.add_value('url',response.url)
+        # itemloder.add_value('url_object_id',get_md5(response.url))
+        # itemloder.add_css('title','.l.info-h3::text')
+        # itemloder.add_css('all','strong::text') #salary work_years degree_need  job_addvantage scale company_type address
+        # itemloder.add_css('job_addvantage','p::text')
+        # # itemloder.add_css('job_info','.pos-ul p::text')
+        # itemloder.add_css('company_name','.pro-mark a::attr(alt)')
+        # itemloder.add_css('tags','.iconfont a::text')
+        #
+        #
+        # item=itemloder.load_item()
+        # return item
