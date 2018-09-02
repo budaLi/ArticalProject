@@ -67,7 +67,16 @@ class MovieImagePipeline(ImagesPipeline):
                 movie_url_field=value['path']
                 item['image_path']=movie_url_field
 
-            return item
+                yield item
+
+class DoutuImagePipeline(ImagesPipeline):
+    def item_completed(self, results, item, info):
+        if 'image_url' in item:
+            for ok,value in results:
+                movie_url_field=value['path']
+                item['image_path']=movie_url_field
+
+                yield item
 
 
 class MysqlPipeLine(object):        #将内容保存数据库

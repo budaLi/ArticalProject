@@ -606,3 +606,9 @@ class CartoonItem(scrapy.Item):
         params=[self['url_object_id'],self['movie_name'],self['short_desc'],self['score'],self['hot'],play_url,self['image_url'],self['image_path'],self['jishu'],self['tags'],description,self['play_time'],crawl_time]
 
         return insert_sql,params
+
+class DoutuItem(scrapy.Item):
+    image_title=scrapy.Field()
+    image_url=scrapy.Field()
+    image_path=scrapy.Field()
+

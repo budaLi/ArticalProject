@@ -65,7 +65,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'ArticalProject.pipelines.MysqlTwistedPipeline': 2,      #数字大小决定执行顺序，越小越先执行
+  # 'ArticalProject.pipelines.MysqlTwistedPipeline': 2,      #数字大小决定执行顺序，越小越先执行
    #  'ArticalProject.pipelines.ArticalImagePipeline':1,  #重写管道
     'ArticalProject.pipelines.MovieImagePipeline':1,  #重写管道
     #  'ArticalProject.pipelines.TianyanchaPipeline':1,  #重写管道
@@ -80,9 +80,9 @@ IMAGES_URLS_FIELD='image_url'  #指向items下的一个字段 指明所要下载
 # os.path.dirname(__file__)     #获取当前文件的文件名
 project_dir=os.path.abspath(os.path.dirname(__file__))  #根据文件名获取绝对路径
 # IMAGES_STORE=os.path.join(project_dir,'images') #配置图片的存放路径  在此配置相对路径
-IMAGES_STORE='E:\data\images'
-# IMAGES_MIN_HEIGHT=100      #设置图片大小
-# IMAGE_MIN_WIDTH=100
+IMAGES_STORE='E:\data\images\doutu'
+# IMAGES_MIN_HEIGHT=240      #设置图片大小
+# IMAGE_MIN_WIDTH=240
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
