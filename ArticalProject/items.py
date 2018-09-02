@@ -545,9 +545,9 @@ class VideoItem(scrapy.Item):
     play_url = scrapy.Field()
     # 图片
     image_url = scrapy.Field()
-    # 别名
     image_path=scrapy.Field()
-    alias = scrapy.Field()
+    # 别名
+    alias=scrapy.Field()
     # 导演
     director = scrapy.Field()
     # tag
@@ -562,7 +562,47 @@ class VideoItem(scrapy.Item):
         description=remove_xiexian(self['description'])
         play_url='http://yun.baiyug.cn/vip/index.php?url='+self['play_url']
         insert_sql="""insert into tc_movie(movie_name,short_desc,score,stars,hot,play_url,image_url,image_path,alias,director,tags,description,play_time,crawl_time) VALUES
-                      (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                      (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
         params=[self['movie_name'],self['short_desc'],self['score'],self['stars'],self['hot'],play_url,self['image_url'],self['image_path'],self['alias'],self['director'],self['tags'],description,self['play_time'],crawl_time]
+
+        return insert_sql,params
+
+
+class CartoonItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    url_object_id=scrapy.Field()
+    # 名字
+    movie_name = scrapy.Field()
+    # 一句话描述
+    short_desc = scrapy.Field()
+    # 评分
+    score = scrapy.Field()
+
+    # 播放量
+    hot = scrapy.Field()
+    # 播放地址
+    play_url = scrapy.Field()
+    # 图片
+    image_url = scrapy.Field()
+    image_path=scrapy.Field()
+
+    #集数
+    jishu = scrapy.Field()
+
+    # tag
+    tags = scrapy.Field()
+    # 简介
+    description = scrapy.Field()
+    # 播放时间
+    play_time = scrapy.Field()
+    crawl_time=scrapy.Field()
+    def get_insert_sql(self):
+        crawl_time=datetime.datetime.now().strftime(SQL_DATETIME_FORMAT)
+        description=remove_xiexian(self['description'])
+        play_url='http://yun.baiyug.cn/vip/index.php?url='+self['play_url']
+        insert_sql="""insert into cartoon_movie(url_object_id,movie_name,short_desc,score,hot,play_url,image_url,image_path,jishu,tags,description,play_time,crawl_time) VALUES
+                      (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+        params=[self['url_object_id'],self['movie_name'],self['short_desc'],self['score'],self['hot'],play_url,self['image_url'],self['image_path'],self['jishu'],self['tags'],description,self['play_time'],crawl_time]
 
         return insert_sql,params

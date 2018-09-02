@@ -14,7 +14,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # execute(['scrapy','crawl','tianyancha'])        #通过命令行运c行爬虫
 # execute(['scrapy','crawl','zhilian'])        #通过命令行运c行爬虫
 # execute(['scrapy','crawl','shixiseng'])        #通过命令行运c行爬虫
-execute(['scrapy','crawl','movie'])        #通过命令行运c行爬虫
+# execute(['scrapy','crawl','movie'])        #通过命令行运c行爬虫
 # execute(['scrapy','crawl','meizi'])        #通过命令行运c行爬虫
 # execute(['scrapy','crawl','chengren'])        #通过命令行运c行爬虫
 # execute(['scrapy','crawl','qq'])        #通过命令行运c行爬虫
+execute(['scrapy','crawl','tc_cartoon'])        #通过命令行运c行爬虫

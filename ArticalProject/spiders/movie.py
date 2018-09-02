@@ -5,7 +5,7 @@ from ArticalProject.items import VideoItem
 class TencentSpider(scrapy.Spider):
     name = 'movie'
     allowed_domains = ['v.qq.com']
-    base_url = 'https://v.qq.com/x/list/movie?offset='
+    base_url = 'https://v.qq.com/x/list/movie?offset='  #电影
     custom_settings = {
         "COOKIES_ENABLED": False,
         "DOWNLOAD_DELAY": 0.00,
