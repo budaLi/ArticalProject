@@ -101,7 +101,7 @@ if __name__=='__main__':
         S.delete_ip(ip)     #爬玩不用了
 
 
-    S=GetIp()
-    while 1:
-        res=S.get_random()
-        print('此ip可用',res)
+    # S=GetIp()
+    # while 1:
+    #     res=S.get_random()
+    #     print('此ip可用',res)
