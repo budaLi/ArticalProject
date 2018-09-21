@@ -31,5 +31,5 @@ scrapy爬虫的一些小项目,包括伯乐在线，拉勾网，腾讯视频，�
 #能爬5000张左右
 
 #小说爬取
-[小说](https://github.com/152056208/ArticalProject/blob/master/tools/xiaoshuo.py)
+[小说](https://github.com/budaLi/ArticalProject/blob/master/ArticalProject/spiders/xiaoshuo.py)
 #佛曰不可说，别举报我
