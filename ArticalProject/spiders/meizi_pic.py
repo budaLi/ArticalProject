@@ -14,7 +14,7 @@ class MeiziSpider(scrapy.Spider):
     allowed_domains = ['www.meizitu.com']
     start_urls = ['http://www.meizitu.com/a/more_1.html']
     custom_settings = {
-            "DOWNLOAD_DELAY": 0.03
+            "DOWNLOAD_DELAY": 0.00
         }
 
     def parse(self,response):

@@ -612,3 +612,14 @@ class DoutuItem(scrapy.Item):
     image_url=scrapy.Field()
     image_path=scrapy.Field()
 
+class WangyiyunItem(scrapy.Item):
+    id=scrapy.Field()
+    object_id=scrapy.Field()
+    file_name=scrapy.Field()
+    image_url=scrapy.Field()
+    download_id=scrapy.Field()
+    length=scrapy.Field()
+    user=scrapy.Field()
+    zhuanji=scrapy.Field()
+
+
