@@ -27,9 +27,9 @@ scrapy爬虫的一些小项目,包括伯乐在线，拉勾网，腾讯视频，�
 #还是挺好用的，先用自己的ip爬几个ip，然后暂停，再次运行即可使用爬取的ip再次爬取,注意不要用自己ip爬取太多次，不然会被封
 
 #美女写真图片 
-[美女写真](https://github.com/152056208/ArticalProject/blob/master/tools/meizi_pic.py)
+[美女写真](https://github.com/budaLi/ArticalProject/blob/master/ArticalProject/spiders/meizi_pic.py)
 #能爬5000张左右
 
 #小说爬取
-[小说](https://github.com/152056208/ArticalProject/blob/master/tools/xiaoshuo.py)
+[小说](https://github.com/budaLi/ArticalProject/blob/master/ArticalProject/spiders/xiaoshuo.py)
 #佛曰不可说，别举报我
