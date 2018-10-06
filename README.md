@@ -20,6 +20,7 @@ scrapy爬虫的一些小项目。
 #实习僧爬虫
 [实习僧](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/shixiseng.py)
 #爬取实习僧网站的招聘信息，不过职位好像比其他招聘网站少
+#发现实习僧网站对显示的数字和字体做了一定的加密，有时需要自己更改对应的字典信息。在这里修改。()
 
 #拉钩网爬虫
 [拉钩](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/lagou.py)
@@ -37,9 +38,9 @@ scrapy爬虫的一些小项目。
 #佛曰不可说，别举报我
 
 #qq好友爬虫
-[qq好友爬虫]()
+[qq好友爬虫](https://github.com/budaLi/ArticalProject/blob/master/tools/get_qq.py)
 #抓取自己的所有qq好友信息，将对应信息入库，方便以后对空间说说进行爬取或者分析好友关系等。
 
 #bilibili用户爬虫
-[bilibili用户爬虫]()
+[bilibili用户爬虫](https://github.com/budaLi/ArticalProject/tree/master/bilibili-user-master)
 #发现B站的用户id是从1开始的，然后自己穷举，可以在文件中设置要爬取的id范围，由于此文件是clone别人的，请求头伪造和ip并没有使用scrapy中配置好的信息。
