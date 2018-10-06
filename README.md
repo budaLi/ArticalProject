@@ -41,5 +41,5 @@ scrapy爬虫的一些小项目。
 #抓取自己的所有qq好友信息，将对应信息入库，方便以后对空间说说进行爬取或者分析好友关系等。
 
 #bilibili用户爬虫
-[bilibili用户爬虫]()
+[bilibili用户爬虫](https://github.com/budaLi/ArticalProject/tree/master/bilibili-user-master)
 #发现B站的用户id是从1开始的，然后自己穷举，可以在文件中设置要爬取的id范围，由于此文件是clone别人的，请求头伪造和ip并没有使用scrapy中配置好的信息。
