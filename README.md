@@ -16,6 +16,8 @@ scrapy爬虫的一些小项目。
 #腾讯视频爬虫
 [腾讯视频](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/movie.py)
 #爬取腾讯视频，并使用第三方视频播放地址拼接播放地址，会员视频也可以看的哦
+[福利](http://yun.baiyug.cn/)
+腾讯，爱奇艺各大视频网站视频均可以解析,会员视频免费看~~~
 
 
 #实习僧爬虫
