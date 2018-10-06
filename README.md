@@ -37,7 +37,7 @@ scrapy爬虫的一些小项目。
 #佛曰不可说，别举报我
 
 #qq好友爬虫
-[qq好友爬虫]()
+[qq好友爬虫](https://github.com/budaLi/ArticalProject/blob/master/tools/get_qq.py)
 #抓取自己的所有qq好友信息，将对应信息入库，方便以后对空间说说进行爬取或者分析好友关系等。
 
 #bilibili用户爬虫
