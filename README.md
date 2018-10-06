@@ -1,5 +1,7 @@
 # ArticalProject
-scrapy爬虫的一些小项目,包括伯乐在线，拉勾网，腾讯视频，实习僧网站，知乎等的爬取，智联招聘以及天眼查功能还未实现。欢迎star。
+scrapy爬虫的一些小项目。
+更新了数据库文件，需要在自己本地建对应的数据库进行配置，运行对应的sql文件即可。
+由于已经配置好了请求头伪造和ip更换，下面的项目无特殊说明均是在scrapy基础上的，请您在有一定的scrapy基础上使用该项目。
 
 #伯乐在线爬虫
 [伯乐](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/jobble.py)
@@ -33,3 +35,11 @@ scrapy爬虫的一些小项目,包括伯乐在线，拉勾网，腾讯视频，�
 #小说爬取
 [小说](https://github.com/budaLi/ArticalProject/blob/master/ArticalProject/spiders/xiaoshuo.py)
 #佛曰不可说，别举报我
+
+#qq好友爬虫
+[qq好友爬虫]()
+#抓取自己的所有qq好友信息，将对应信息入库，方便以后对空间说说进行爬取或者分析好友关系等。
+
+#bilibili用户爬虫
+[bilibili用户爬虫]()
+#发现B站的用户id是从1开始的，然后自己穷举，可以在文件中设置要爬取的id范围，由于此文件是clone别人的，请求头伪造和ip并没有使用scrapy中配置好的信息。
