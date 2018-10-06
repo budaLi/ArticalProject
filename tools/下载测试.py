@@ -41,5 +41,5 @@ def video_downloader(video_url):
 
 if __name__ == "__main__":
 
-    #video_downloader('https://ltsbsy.qq.com/uwMRJfz-r5jAYaQXGdGnC2_ppdhgmrDlPaRvaV7F2Ic/cKca1lOtahfenk_VeCQJuyhangsrssr_8PZe5Jyr-TJmhZFTeR2mOEl4BpzfjRacuhNb1t0Sv1NlF61Uv3kDwS4-NWNMi9-UhP90gTJf1lsGeB2xC1DHjGB4FQC6wCo0mJqnuWuikvrfYkxrBVd405UAkNjp4oc2/l002657vhrn.321002.ts.m3u8?ver=4')
+    video_downloader('https://ltsbsy.qq.com/uwMRJfz-r5jAYaQXGdGnC2_ppdhgmrDlPaRvaV7F2Ic/cKca1lOtahfenk_VeCQJuyhangsrssr_8PZe5Jyr-TJmhZFTeR2mOEl4BpzfjRacuhNb1t0Sv1NlF61Uv3kDwS4-NWNMi9-UhP90gTJf1lsGeB2xC1DHjGB4FQC6wCo0mJqnuWuikvrfYkxrBVd405UAkNjp4oc2/l002657vhrn.321002.ts.m3u8?ver=4')
     hebin(r'C:\Users\Lenovo\ArticalProject\ArticalProject\utls\视频',r'C:\Users\Lenovo\ArticalProject\ArticalProject\utls')

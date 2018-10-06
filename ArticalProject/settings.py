@@ -65,9 +65,9 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-  #'ArticalProject.pipelines.MysqlTwistedPipeline': 2,      #数字大小决定执行顺序，越小越先执行
+  'ArticalProject.pipelines.MysqlTwistedPipeline': 2,      #数字大小决定执行顺序，越小越先执行
    #  'ArticalProject.pipelines.ArticalImagePipeline':1,  #重写管道
-    'ArticalProject.pipelines.MovieImagePipeline':1,  #重写管道
+    #'ArticalProject.pipelines.MovieImagePipeline':1,  #重写管道
     #  'ArticalProject.pipelines.TianyanchaPipeline':1,  #重写管道
     #'ArticalProject.pipelines.MeiziImagePipeline':1,  #重写管道
 

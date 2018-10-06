@@ -4,7 +4,7 @@
 import requests
 from scrapy.selector import Selector
 import MySQLdb
-conn=MySQLdb.connect(host='127.0.0.1',user='root',passwd='123',db='artile_spider',charset='utf8',use_unicode=True)
+conn=MySQLdb.connect(host='127.0.0.1',user='root',passwd='123',db='movie',charset='utf8',use_unicode=True)
 cursor=conn.cursor()
 def crwal_xici_ip(random_ip=None):        #爬ip     可以设置ip
     headers={

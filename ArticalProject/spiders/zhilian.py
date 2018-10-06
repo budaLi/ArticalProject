@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.spider import CrawlSpider,Rule
+from scrapy.spiders import CrawlSpider,Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.http import Request
 from scrapy.loader import ItemLoader

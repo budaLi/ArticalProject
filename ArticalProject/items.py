@@ -623,3 +623,23 @@ class WangyiyunItem(scrapy.Item):
     zhuanji=scrapy.Field()
 
 
+class QQItem(scrapy.Item):
+    uin=scrapy.Field()
+    groupid=scrapy.Field()
+    name=scrapy.Field()
+    remark=scrapy.Field()
+    img_url=scrapy.Field()
+    crawl_time=scrapy.Field()
+
+    def get_insert_sql(self):
+        crawl_time=datetime.datetime.now().strftime(SQL_DATE_FORMAT)
+        uin=self['uin']
+        groupid=self['groupid']
+        nick_name=self['name']
+        remark=self['remark']
+        img_ulr=self['img_url']
+        insert_sql="""insert into qq_info(uin,groupid,nick_name,remark,img_url,crawl_time) VALUES
+                      (%s,%s,%s,%s,%s,%s)  on duplicate KEY UPDATE remark=VALUES(remark) """
+        params=[uin,groupid,nick_name,remark,img_ulr,crawl_time]
+
+        return insert_sql,params
