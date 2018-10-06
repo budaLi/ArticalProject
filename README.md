@@ -20,6 +20,7 @@ scrapy爬虫的一些小项目。
 #实习僧爬虫
 [实习僧](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/shixiseng.py)
 #爬取实习僧网站的招聘信息，不过职位好像比其他招聘网站少
+#发现实习僧网站对显示的数字和字体做了一定的加密，有时需要自己更改对应的字典信息。在这里修改。()
 
 #拉钩网爬虫
 [拉钩](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/lagou.py)
