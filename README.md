@@ -1,4 +1,5 @@
-# ArticalProject
+scrapy爬虫集合
+==============
 scrapy爬虫的一些小项目。
 更新了数据库文件，需要在自己本地建对应的数据库进行配置，运行对应的sql文件即可。
 由于已经配置好了请求头伪造和ip更换，下面的项目无特殊说明均是在scrapy基础上的，请您在有一定的scrapy基础上使用该项目。
@@ -15,12 +16,21 @@ scrapy爬虫的一些小项目。
 #腾讯视频爬虫
 [腾讯视频](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/movie.py)
 #爬取腾讯视频，并使用第三方视频播放地址拼接播放地址，会员视频也可以看的哦
+[福利](http://yun.baiyug.cn/)
+腾讯，爱奇艺各大视频网站视频均可以解析,会员视频免费看~~~
 
 
 #实习僧爬虫
 [实习僧](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/shixiseng.py)
 #爬取实习僧网站的招聘信息，不过职位好像比其他招聘网站少
-#发现实习僧网站对显示的数字和字体做了一定的加密，有时需要自己更改对应的字典信息。在这里修改。()
+#发现实习僧网站对显示的数字和字体做了一定的加密，有时需要自己更改对应的字典信息。在这里修改。
+[配置对应字体](https://github.com/budaLi/ArticalProject/blob/master/ArticalProject/utls/common.py)
+
+如图:
+
+![Image text](https://github.com/budaLi/ArticalProject/blob/master/tools/QM%40DG1O~%245XOKP127WXI4%7DJ.png)
+
+
 
 #拉钩网爬虫
 [拉钩](https://github.com/152056208/ArticalProject/blob/master/ArticalProject/spiders/lagou.py)
