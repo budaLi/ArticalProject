@@ -1,4 +1,4 @@
-scrapy爬虫集合
+爬虫集合
 ==============
 scrapy爬虫的一些小项目。
 更新了数据库文件，需要在自己本地建对应的数据库进行配置，运行对应的sql文件即可。
@@ -54,3 +54,7 @@ scrapy爬虫的一些小项目。
 #bilibili用户爬虫
 [bilibili用户爬虫](https://github.com/budaLi/ArticalProject/tree/master/bilibili-user-master)
 #发现B站的用户id是从1开始的，然后自己穷举，可以在文件中设置要爬取的id范围，由于此文件是clone别人的，请求头伪造和ip并没有使用scrapy中配置好的信息。
+
+#github模拟登陆
+[github](https://github.com/budaLi/ArticalProject/blob/master/tools/github%E7%99%BB%E9%99%86.py）
+#抱着坦白从宽的原则，在这里沉重道歉，以为自己发现了star的漏洞，刷了几十个star不久就全给消灭了，正所谓道高一尺魔高一丈，我服了。。老老实实敲自己的代码吧
